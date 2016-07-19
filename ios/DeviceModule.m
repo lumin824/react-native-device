@@ -2,6 +2,8 @@
 #import "RCTBridgeModule.h"
 #import "RCTUIManager.h"
 
+#import <sys/utsname.h>
+
 @interface DeviceModule: NSObject<RCTBridgeModule>
 
 @end
@@ -16,9 +18,15 @@
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(test:(RCTPromiseResolveBlock)resolve
+RCT_EXPORT_METHOD(info:(RCTPromiseResolveBlock)resolve
                   reject:(RCTPromiseRejectBlock)reject) {
-    resolve(@"ok");
+    NSMutableDictionary* result = [[NSMutableDictionary alloc]init];
+    
+    struct utsname systemInfo;
+    uname(&systemInfo);
+    
+    result[@"machine"] = [NSString stringWithCString:systemInfo.machine encoding:NSUTF8StringEncoding];
+    resolve(result);
 }
 
 @end

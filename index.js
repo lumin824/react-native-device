@@ -5,6 +5,6 @@ import {
 
 let { DeviceModule } = NativeModules;
 
-export var test = DeviceModule.test;
+export var info = DeviceModule.info;
 
 export var Device = requireNativeComponent('Device');
